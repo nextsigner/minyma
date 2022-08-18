@@ -10,7 +10,7 @@ import unik.UnikQProcess 1.0
 ApplicationWindow{
 	id:app
     visible:true
-    title: 'Mínyma by @nextsigner'
+    title: 'Mínyma by @nextsigner...'
     width: Screen.width/2
     height: Screen.desktopAvailableHeight-altoBarra
     color: 'black'
@@ -42,10 +42,11 @@ ApplicationWindow{
         id: uqp
         onLogDataChanged: {
             //console.log('LogData: '+logData)
-            let ip=(''+logData).replace(/ /g, '')
+            let ip=(''+logData).replace(/ /g, '').replace(/\n/g, '')
             console.log('UnikWebSocketServerView IP: '+ip)
             let comp=Qt.createComponent("UnikWebSocketServerView.qml")
             let obj=comp.createObject(app, {ip:ip})
+            app.title='Mínyma by @nextsigner - '+ip+':'+obj.port
             //Qt.quit()
         }
         onFinished: {
