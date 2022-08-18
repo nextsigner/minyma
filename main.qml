@@ -5,6 +5,8 @@ import Qt.labs.settings 1.0
 import QtPositioning 5.9
 import QtLocation 5.9
 
+import unik.UnikQProcess 1.0
+
 ApplicationWindow{
 	id:app
     visible:true
@@ -36,7 +38,9 @@ ApplicationWindow{
         property real visibility
     }
     FontLoader {name: "FontAwesome";source: "qrc:/fontawesome-webfont.ttf";}
-
+    UnikQProcess{
+        id: uqp
+    }
 
     UnikWebSocketServerView{id:uwss}
 
