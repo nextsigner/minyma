@@ -65,7 +65,7 @@ Item {
                 let d=new Date(Date.now())
                 let ms=d.getTime()
                 let fn='script_'+ms+'.sh'
-                let ffn='/tmp/'+fn
+                let ffn=unik.getPath(3)+'/'+fn
                 unik.setFile(ffn, bf)
                 unik.run('chmod a+x '+ffn)
                 unik.ejecutarLineaDeComandoAparte(ffn)
