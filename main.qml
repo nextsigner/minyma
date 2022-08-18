@@ -40,9 +40,25 @@ ApplicationWindow{
     FontLoader {name: "FontAwesome";source: "qrc:/fontawesome-webfont.ttf";}
     UnikQProcess{
         id: uqp
+        onLogDataChanged: {
+            //console.log('LogData: '+logData)
+            let ip=(''+logData).replace(/ /g, '')
+            console.log('UnikWebSocketServerView IP: '+ip)
+            let comp=Qt.createComponent("UnikWebSocketServerView.qml")
+            let obj=comp.createObject(app, {ip:ip})
+            //Qt.quit()
+        }
+        onFinished: {
+        }
+        onStarted: {
+
+        }
+        Component.onCompleted: {
+            uqp.run('sh ./getIp.sh')
+        }
     }
 
-    UnikWebSocketServerView{id:uwss}
+    //UnikWebSocketServerView{id:uwss}
 
     LogView{
         id:logView
