@@ -45,8 +45,14 @@ ApplicationWindow{
             let ip=(''+logData).replace(/ /g, '').replace(/\n/g, '')
             console.log('UnikWebSocketServerView IP: '+ip)
             let comp=Qt.createComponent("UnikWebSocketServerView.qml")
-            let obj=comp.createObject(app, {ip:ip})
-            app.title='Mínyma by @nextsigner - '+ip+':'+obj.port
+            let wlData=unik.getFile('whitelist')
+            let mWL=wlData.split('\n')
+            let wl=[]
+            for(var i=0;i<mWL.length;i++){
+                wl.push(mWL[i])
+            }
+            let obj=comp.createObject(app, {ip:ip, whitelist: wl})
+            app.title='Mínyma by @nextsigner - ws://'+ip+':'+obj.port
             //Qt.quit()
         }
         onFinished: {

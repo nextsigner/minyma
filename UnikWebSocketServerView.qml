@@ -9,6 +9,7 @@ Item {
     property int port: 12345
     property string serverName: 'chatserver'
     property bool inverted: false
+    property var whitelist: []
     Component.onCompleted:{
         var appArgs = Qt.application.arguments
         for(var i=0;i<appArgs.length;i++){
@@ -51,7 +52,28 @@ Item {
             let json=JSON.parse(msg)
             json.serverData={}
             json.serverData.time=time
-            listModelMsg.addMsg(json)
+            console.log('NewMessage: '+JSON.stringify(json))
+            console.log('NewMessage from: ['+json.from+']')
+            console.log('NewMessage to: ['+json.to+']')
+            console.log('NewMessage data: ['+json.data+']')
+            if(json.to==='minyma'&&r.whitelist.indexOf(json.from)>=0){
+                let cmd=json.data
+                cmd=cmd.replace('\\\\"', '"')
+                let bf='#!/bin/bash\n'
+                bf+=''+cmd+'\n'
+                bf+='exit 0;'
+                let d=new Date(Date.now())
+                let ms=d.getTime()
+                let fn='script_'+ms+'.sh'
+                let ffn='/tmp/'+fn
+                unik.setFile(ffn, bf)
+                unik.run('chmod a+x '+ffn)
+                unik.ejecutarLineaDeComandoAparte(ffn)
+
+            }else{
+                listModelMsg.addMsg(json)
+            }
+
         }
     }
     Column{
